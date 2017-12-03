@@ -1,1 +1,12 @@
-{{ map_file | safe}}
+
+<div style="max-width: 50%"> <!-- make this more elegant in a css -->
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+
+{% if map %}
+    {{ map | safe}}
+{% endif %}
