@@ -42,13 +42,15 @@ def index(request):
                 station_trip_count[station_from] = station_trip_count.get(station_from, 0) + 1
                 station_trip_count[station_to] = station_trip_count.get(station_to, 0) + 1
 
+            m = folium.Map(location=[43.66093, -79.3880384], zoom_start=13.5, tiles='Stamen Toner')
+
             heatmap_values = []
             for key, value in station_trip_count.items():  # convert name:count to [lat, lon, count]
                 lat = station_lat_long[key]['lat']
                 lon = station_lat_long[key]['lon']
                 heatmap_values.append([lat, lon, value])
+                folium.Circle([lat, lon], radius=4, fill=True, popup='{}<br>Count: {}'.format(key, value)).add_to(m)
 
-            m = folium.Map(location=[43.66093, -79.3880384], zoom_start=13.5, tiles='Stamen Toner')
             m.add_children(plugins.HeatMap(heatmap_values, radius=15, blur=20))
 
             context['map'] = m._repr_html_()
