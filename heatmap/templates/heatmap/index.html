@@ -1,21 +1,56 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load my_filters %}
 
-{% block title %}BikeShare Toronto Station Heatmap{% endblock %}
-{% block subtitle %}A heatmap showing which stations you use the most{% endblock %}
+{% block title %}Station Usage Heatmap{% endblock %}
+{% block subtitle %}A heatmap showing which BikeShare stations you use the most{% endblock %}
 
 {% block content %}
-    {% if map %}
-        {{ map | safe}}
-    {% endif %}
-    <h2 class="content-subhead">Paste your HTML here:</h2>
-    <div class="pure-form pure-form-stacked">
-        <form action="" method="post">
-            {% csrf_token %}
-            <fieldset>
-                {{ form.html_paste|addclass:'pure-input-1' }}
-                <input type="submit" value="Submit" class="pure-button pure-button-primary" />
-            </fieldset>
-        </form>
-    </div>
+{% if map %}
+    {{ map | safe}}
+{% endif %}
+<div>
+    <h2 class="content-subhead">How this works</h2>
+    <p>
+        The stations and their locations are pulled from the
+        <a href="https://www1.toronto.ca/wps/portal/contentonly?vgnextoid=ad3cb6b6ae92b310VgnVCM10000071d60f89RCRD">
+            BikeShare Toronto Open Data API
+        </a>. Then using the submitted trip data in HTML form, the start and end stations are tallied up and turned
+        into this heat map based on how often each station is used.
+    </p>
+    <p>
+        By default this map shows sample data based on my own usage.
+    </p>
+</div>
+
+<div>
+    <h2 class="content-subhead">How to get your trip HTML data</h2>
+    <p>
+        Go to the <em>Trips</em> page on the BikeShare website,
+        <a href="https://bikesharetoronto.com/members/trips">https://bikesharetoronto.com/members/trips</a>,
+        click <em>Show Results</em>, then open up the page inspector (F12), and copy the page's HTML. Paste
+        that into the box below and click Submit.
+    </p>
+    <img src="{% static 'img/chrome_help.png' %}">
+</div>
+
+<h2 class="content-subhead">Paste your HTML here</h2>
+<div class="pure-form pure-form-stacked">
+    <form action="" method="post">
+        {% csrf_token %}
+        <fieldset>
+            {{ form.html_paste|addclass:'pure-input-1' }}
+            <input type="submit" value="Submit" class="pure-button pure-button-primary" />
+        </fieldset>
+    </form>
+</div>
+
+<div>
+    <h2 class="content-subhead">Why not just pull the trip data from the website?</h2>
+    <p>
+        It would be much easier to pull the trip data from the website by asking for your BikeShare username and
+        password, but this information shouldn't be shared since it would also give access to account information such
+        as personal and payment information. There is no API to safely get the trip data otherwise.
+    </p>
+</div>
 {% endblock %}
