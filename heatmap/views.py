@@ -16,44 +16,16 @@ def index(request):
         form = BikeShareHtmlInput(request.POST)
 
         if form.is_valid():
-            current_dir = os.path.dirname(os.path.abspath(__file__))
-            api_file_path = os.path.join(current_dir, 'bikeshare_api/station_information')
-            check_and_update_api_file(api_file_path)
-
-            with open(api_file_path) as f:
-                data = json.load(f)
-            station_data = data['data']['stations']
-            station_lat_long = {}
-            for station in station_data:
-                station_lat_long[station['name']] = {'lat': station['lat'], 'lon': station['lon']}
-
             user_entered_html = form.cleaned_data['html_paste']
-            soup = BeautifulSoup(user_entered_html, 'html.parser')
-            rows = soup.find('div', class_='table-responsive').table.tbody.findAll('tr')
-            user_trips = []
-            for row in rows:
-                cols = row.find_all('td')
-                cols = [ele.text.strip() for ele in cols]
-                user_trips.append([ele for ele in cols if ele])  # Get rid of empty values
-
-            station_trip_count = {}
-            for trip in user_trips:
-                station_from = trip[1]
-                station_to = trip[3]
-                station_trip_count[station_from] = station_trip_count.get(station_from, 0) + 1
-                station_trip_count[station_to] = station_trip_count.get(station_to, 0) + 1
-
-            heatmap_values = []
-            for key, value in station_trip_count.items():  # convert name:count to [lat, lon, count]
-                lat = station_lat_long[key]['lat']
-                lon = station_lat_long[key]['lon']
-                heatmap_values.append([lat, lon, value])
-                folium.Circle([lat, lon], radius=4, fill=True, popup='{}<br>Count: {}'.format(key, value)).add_to(m)
-
-            m.add_children(plugins.HeatMap(heatmap_values, radius=15, blur=20))
+            m = read_html_and_create_map(user_entered_html, m)
 
     else:
         form = BikeShareHtmlInput()
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        sample_data_path = os.path.join(current_dir, 'sample_data/sample_data')
+        with open(sample_data_path) as f:
+            html = f.read()
+        m = read_html_and_create_map(html, m)
 
     context['map'] = m._repr_html_()
     context['form'] = form
@@ -65,3 +37,42 @@ def check_and_update_api_file(filepath):
         response = requests.get('https://tor.publicbikesystem.net/ube/gbfs/v1/en/station_information')
         with open(filepath, 'wb') as f:
             f.write(response.content)
+
+
+def read_html_and_create_map(html, m):
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    api_file_path = os.path.join(current_dir, 'bikeshare_api/station_information')
+    check_and_update_api_file(api_file_path)
+
+    with open(api_file_path) as f:
+        data = json.load(f)
+    station_data = data['data']['stations']
+    station_lat_long = {}
+    for station in station_data:
+        station_lat_long[station['name']] = {'lat': station['lat'], 'lon': station['lon']}
+
+    soup = BeautifulSoup(html, 'html.parser')
+    rows = soup.find('div', class_='table-responsive').table.tbody.findAll('tr')
+    user_trips = []
+    for row in rows:
+        cols = row.find_all('td')
+        cols = [ele.text.strip() for ele in cols]
+        user_trips.append([ele for ele in cols if ele])  # Get rid of empty values
+
+    station_trip_count = {}
+    for trip in user_trips:
+        station_from = trip[1]
+        station_to = trip[3]
+        station_trip_count[station_from] = station_trip_count.get(station_from, 0) + 1
+        station_trip_count[station_to] = station_trip_count.get(station_to, 0) + 1
+
+    heatmap_values = []
+    for key, value in station_trip_count.items():  # convert name:count to [lat, lon, count]
+        lat = station_lat_long[key]['lat']
+        lon = station_lat_long[key]['lon']
+        heatmap_values.append([lat, lon, value])
+        folium.Circle([lat, lon], radius=4, fill=True, popup='{}<br>Count: {}'.format(key, value)).add_to(m)
+
+    m.add_children(plugins.HeatMap(heatmap_values, radius=15, blur=20))
+
+    return m
