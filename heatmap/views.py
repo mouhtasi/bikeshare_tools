@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 
 def index(request):
     context = {'map': None}
+    m = folium.Map(location=[43.66093, -79.3880384], zoom_start=13, tiles='Stamen Toner')
     if request.method == 'POST':
         form = BikeShareHtmlInput(request.POST)
 
@@ -42,8 +43,6 @@ def index(request):
                 station_trip_count[station_from] = station_trip_count.get(station_from, 0) + 1
                 station_trip_count[station_to] = station_trip_count.get(station_to, 0) + 1
 
-            m = folium.Map(location=[43.66093, -79.3880384], zoom_start=13.5, tiles='Stamen Toner')
-
             heatmap_values = []
             for key, value in station_trip_count.items():  # convert name:count to [lat, lon, count]
                 lat = station_lat_long[key]['lat']
@@ -55,7 +54,6 @@ def index(request):
 
     else:
         form = BikeShareHtmlInput()
-        m = folium.Map(location=[43.66093, -79.3880384], zoom_start=13.5, tiles='Stamen Toner')
 
     context['map'] = m._repr_html_()
     context['form'] = form
