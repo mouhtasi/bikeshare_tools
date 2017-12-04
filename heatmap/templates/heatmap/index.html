@@ -1,12 +1,57 @@
+{% load static %}
+{% load my_filters %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pure/pure-min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pure-layout-side-menu/side-menu.css' %}" />
+</head>
 
-<div style="max-width: 50%"> <!-- make this more elegant in a css -->
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="Submit" />
-        </form>
+<body>
+<div id="layout">
+    <!-- Menu toggle -->
+    <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+    </a>
+
+    <div id="menu">
+        <div class="pure-menu">
+            <a class="pure-menu-heading" href="#">Tools</a>
+
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item menu-item-divided pure-menu-selected">
+                    <a href="{% url 'index' %}" class="pure-menu-link">Trip Heatmap</a>
+                </li>
+
+            </ul>
+        </div>
     </div>
 
-{% if map %}
-    {{ map | safe}}
-{% endif %}
+    <div id="main">
+        <div class="header">
+            <h1>BikeShare Toronto Trip Heatmap</h1>
+            <h2>A subtitle for your page goes here</h2>
+        </div>
+
+        <div class="content">
+            {% if map %}
+                {{ map | safe}}
+            {% endif %}
+            <h2 class="content-subhead">Paste your HTML here</h2>
+            <div class="pure-form pure-form-stacked">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <fieldset>
+                        {{ form.html_paste|addclass:'pure-input-1' }}
+                        <input type="submit" value="Submit" class="pure-button pure-button-primary" />
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/ui.js' %}"></script>
+</body>
+</html>

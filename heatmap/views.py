@@ -53,9 +53,11 @@ def index(request):
 
             m.add_children(plugins.HeatMap(heatmap_values, radius=15, blur=20))
 
-            context['map'] = m._repr_html_()
     else:
         form = BikeShareHtmlInput()
+        m = folium.Map(location=[43.66093, -79.3880384], zoom_start=13.5, tiles='Stamen Toner')
+
+    context['map'] = m._repr_html_()
     context['form'] = form
     return render(request, 'heatmap/index.html', context)
 
