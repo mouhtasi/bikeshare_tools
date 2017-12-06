@@ -7,6 +7,8 @@ import time
 import requests
 import json
 from bs4 import BeautifulSoup
+import pickle
+from django.http import HttpResponse
 
 
 def index(request):
@@ -73,6 +75,55 @@ def read_html_and_create_map(html, m):
         heatmap_values.append([lat, lon, value])
         folium.Circle([lat, lon], radius=4, fill=True, popup='{}<br>Count: {}'.format(key, value)).add_to(m)
 
-    m.add_children(plugins.HeatMap(heatmap_values, radius=15, blur=20))
+    m.add_child(plugins.HeatMap(heatmap_values, radius=15, blur=20))
 
     return m
+
+
+def global_heatmap(request):
+    context = {}
+    m1 = folium.Map(location=[43.66093, -79.3880384], zoom_start=12, tiles='Stamen Toner', prefer_canvas=True)
+    m2 = folium.Map(location=[43.66093, -79.3880384], zoom_start=12, tiles='Stamen Toner', prefer_canvas=True)
+
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    filepath = os.path.join(current_dir, '../bikeshare_tools/data_with_capacity.pickle')
+
+    with open(filepath, 'rb') as f:
+        stations_data = pickle.load(f)
+
+    times = []  # [time, time, time, ...]
+    stations = []  # [[[lat, lon, w], [lat, lon, w], ...], [[lat, lon, w], [lat, lon, w], ...]]
+    stations_by_capacity = []
+    for time_station in stations_data:
+        station = [time_station['lat'], time_station['lon'], time_station['bikes_available']]
+        station_by_capacity = [time_station['lat'], time_station['lon'],
+                               time_station['bikes_available'] / time_station['capacity']]
+
+        unix_timestamp = time_station['timestamp']
+        timestamp = time.strftime('%H:%M',time.localtime(unix_timestamp))
+        if len(times) == 0 or timestamp != times[-1]:
+            times.append(timestamp)
+            stations.append([station])
+            stations_by_capacity.append([station_by_capacity])
+        else:
+            stations[-1].append(station)  # outer lists need to correspond with timestamps index
+            stations_by_capacity[-1].append(station_by_capacity)
+
+    m1.add_child(plugins.HeatMapWithTime(stations, times, radius=20, use_local_extrema=True, min_speed=9))
+    m1.save('/home/nap/bikeshare_tools/heatmap/templates/heatmap/m1.html')
+    m2.add_child(plugins.HeatMapWithTime(stations_by_capacity, times, radius=20, use_local_extrema=True, min_speed=9))
+    m2.save('/home/nap/bikeshare_tools/heatmap/templates/heatmap/m2.html')
+
+    return render(request, 'heatmap/system_heatmap.html', context)
+
+
+def global_heatmap_by_number_of_bikes(request):
+    with open('/home/nap/bikeshare_tools/heatmap/templates/heatmap/m1.html', 'r') as f:
+        m = f.read()
+    return HttpResponse(m)
+
+
+def global_heatmap_by_station_capacity(request):
+    with open('/home/nap/bikeshare_tools/heatmap/templates/heatmap/m2.html', 'r') as f:
+        m = f.read()
+    return HttpResponse(m)
