@@ -81,17 +81,19 @@ def read_html_and_create_map(html, m):
 
 
 def system_heatmap(request):
-    context = {}
-
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    filepath = os.path.join(current_dir, '../bikeshare_tools/data_with_capacity.pickle')
+    map_file_1 = os.path.join(current_dir, '../heatmap/templates/heatmap/m1.html')
+    map_file_2 = os.path.join(current_dir, '../heatmap/templates/heatmap/m2.html')
 
-    with open(filepath, 'rb') as f:
-        stations_data = pickle.load(f)
+    if not os.path.isfile(map_file_1) and not os.path.isfile(map_file_2):  # we don't need to do the work again
+        filepath = os.path.join(current_dir, '../bikeshare_tools/filtered_data_with_capacity.pickle')
 
-    create_and_save_maps(stations_data)
+        with open(filepath, 'rb') as f:
+            stations_data = pickle.load(f)
 
-    return render(request, 'heatmap/system_heatmap.html', context)
+        create_and_save_maps(stations_data)
+
+    return render(request, 'heatmap/system_heatmap.html')
 
 
 def create_and_save_maps(stations_data):
@@ -119,18 +121,26 @@ def create_and_save_maps(stations_data):
             stations_by_capacity[-1].append(station_by_capacity)
 
     m1.add_child(plugins.HeatMapWithTime(stations, times, radius=30, use_local_extrema=True))
-    m1.save('/home/nap/bikeshare_tools/heatmap/templates/heatmap/m1.html')
     m2.add_child(plugins.HeatMapWithTime(stations_by_capacity, times, radius=30))
-    m2.save('/home/nap/bikeshare_tools/heatmap/templates/heatmap/m2.html')
+
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    map_file_1 = os.path.join(current_dir, '../heatmap/templates/heatmap/m1.html')
+    map_file_2 = os.path.join(current_dir, '../heatmap/templates/heatmap/m2.html')
+    m1.save(map_file_1)
+    m2.save(map_file_2)
 
 
 def global_heatmap_by_number_of_bikes(request):
-    with open('/home/nap/bikeshare_tools/heatmap/templates/heatmap/m1.html', 'r') as f:
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    map_file = os.path.join(current_dir, '../heatmap/templates/heatmap/m1.html')
+    with open(map_file, 'r') as f:
         m = f.read()
     return HttpResponse(m)
 
 
 def global_heatmap_by_station_capacity(request):
-    with open('/home/nap/bikeshare_tools/heatmap/templates/heatmap/m2.html', 'r') as f:
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    map_file = os.path.join(current_dir, '../heatmap/templates/heatmap/m2.html')
+    with open(map_file, 'r') as f:
         m = f.read()
     return HttpResponse(m)
