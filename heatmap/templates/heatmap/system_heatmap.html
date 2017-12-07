@@ -6,9 +6,35 @@
 {% block subtitle %}A heatmap showing where BikeShare bikes are over time{% endblock %}
 
 {% block content %}
-<div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;">
-    <iframe src="{% url 'global_heatmap_by_number_of_bikes' %}" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div>
+    <div>
+        <h2 class="content-subhead">Ratio of Available Bikes to Station Capacity Per-Station</h2>
+        <div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;">
+        <iframe src="{% url 'global_heatmap_by_station_capacity' %}" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div>
+        <p>This map shows how many bikes are available at each station relative to the total capacity of the station.
+        So a station with a capacity of 20 docks having 10 available bikes has the same heat intensity as a station
+        with 10 docks having 5 available bikes.</p>
+        <p>This means that this map shows bike activity relative to the available infrastructure in the area.</p>
+    </div>
 
-<div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;">
-    <iframe src="{% url 'global_heatmap_by_station_capacity' %}" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div>
+
+    <div>
+        <h2 class="content-subhead">Total Number of Bikes Per-Station</h2>
+        <div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;">
+        <iframe src="{% url 'global_heatmap_by_number_of_bikes' %}" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div>
+        <p>This map is a bit simpler in that it just shows the number of bikes available at each station. So a station
+        with 20 docks having 5 available bikes has the same heat intensity as a station with 10 docks having 5 available
+        bikes.</p>
+        <p>The catch with this map is that there are areas with far more bikes available, such as Bay/Front, which will
+        almost always show peak intensity. This would be more useful if the bikeshare infrastructure was spread out
+        more evenly geographically.</p>
+    </div>
+
+    <div>
+        <h2 class="content-subhead">How this works</h2>
+        <p>The stations and their locations are pulled from the station_information endpoint of the
+            <a href="https://www1.toronto.ca/wps/portal/contentonly?vgnextoid=ad3cb6b6ae92b310VgnVCM10000071d60f89RCRD">
+                BikeShare Toronto Open Data API</a>. The stations' total capacity and number of bikes available is
+            pulled from the station_status endpoint</p>
+
+    </div>
 {% endblock %}
