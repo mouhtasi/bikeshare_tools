@@ -20,13 +20,17 @@
 
     <div id="menu">
         <div class="pure-menu">
-            <a class="pure-menu-heading" href="#">Tools</a>
+            <a class="pure-menu-heading" href="#">Bikeshare</a>
 
             <ul class="pure-menu-list">
-                <li class="pure-menu-item menu-item-divided pure-menu-selected">
-                    <a href="{% url 'index' %}" class="pure-menu-link">Trip Heatmap</a>
+                {% with url_name=request.resolver_match.url_name %}
+                <li class="pure-menu-item menu-item-divided {% if url_name == 'index' %}pure-menu-selected{% endif %}">
+                    <a href="{% url 'index' %}" class="pure-menu-link">Personal Heatmap</a>
                 </li>
-
+                <li class="pure-menu-item menu-item-divided {% if url_name == 'system_heatmap' %}pure-menu-selected{% endif %}">
+                    <a href="{% url 'system_heatmap' %}" class="pure-menu-link">System Heatmap</a>
+                </li>
+                {% endwith %}
             </ul>
         </div>
     </div>

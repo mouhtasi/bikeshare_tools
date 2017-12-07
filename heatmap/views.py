@@ -80,7 +80,7 @@ def read_html_and_create_map(html, m):
     return m
 
 
-def global_heatmap(request):
+def system_heatmap(request):
     context = {}
 
     current_dir = os.path.dirname(os.path.abspath(__file__))
