@@ -2,3 +2,4 @@
 __pycache__/
 *.py[cod]
 bikeshare_tools/static/
+db.sqlite3

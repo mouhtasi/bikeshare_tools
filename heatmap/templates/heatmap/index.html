@@ -6,9 +6,8 @@
 {% block subtitle %}A heatmap showing which BikeShare stations you use the most{% endblock %}
 
 {% block content %}
-{% if map %}
-    {{ map | safe}}
-{% endif %}
+<div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;">
+    <iframe src="{% url iframe_url %}" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div>
 <div>
     <h2 class="content-subhead">How this works</h2>
     <p>
