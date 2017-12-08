@@ -2,7 +2,7 @@
 {% load static %}
 {% load my_filters %}
 
-{% block title %}Station Usage Heatmap{% endblock %}
+{% block title %}{% block page_title %}Station Usage Heatmap{% endblock %}{% endblock %}
 {% block subtitle %}A heatmap showing which BikeShare stations you use the most{% endblock %}
 
 {% block content %}
