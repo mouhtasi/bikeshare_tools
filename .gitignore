@@ -3,3 +3,8 @@ __pycache__/
 *.py[cod]
 bikeshare_tools/static/
 db.sqlite3
+heatmap/templates/heatmap/m1.html
+heatmap/templates/heatmap/m2.html
+heatmap/templates/heatmap/sample_map.html
+heatmap/bikeshare_api/station_information
+bikeshare_tools/data_with_capacity.pickle
