@@ -12,6 +12,10 @@ from django.http import HttpResponse
 
 
 def index(request):
+    return render(request, 'heatmap/index.html')
+
+
+def personal_heatmap(request):
     context = {}
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -36,7 +40,7 @@ def index(request):
 
     context['form'] = form
 
-    return render(request, 'heatmap/index.html', context)
+    return render(request, 'heatmap/personal_heatmap.html', context)
 
 
 # create a sample map if it doesn't already exist

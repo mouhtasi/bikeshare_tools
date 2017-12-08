@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('personal_heatmap/', views.personal_heatmap, name='personal_heatmap'),
     path('sample_trip_map_endpoint/', views.sample_trip_map_endpoint, name='sample_trip_map_endpoint'),
     path('generated_trip_map_endpoint/', views.generated_trip_map_endpoint, name='generated_trip_map_endpoint'),
     path('system_heatmap/', views.system_heatmap, name='system_heatmap'),

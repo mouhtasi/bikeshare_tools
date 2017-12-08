@@ -2,54 +2,17 @@
 {% load static %}
 {% load my_filters %}
 
-{% block title %}Station Usage Heatmap{% endblock %}
-{% block subtitle %}A heatmap showing which BikeShare stations you use the most{% endblock %}
+{% block title %}BikeShare Toronto Tools{% endblock %}
+{% block subtitle %}A set of tools for Toronto's BikeShare system{% endblock %}
 
 {% block content %}
-<div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;">
-    <iframe src="{% url iframe_url %}" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div>
 <div>
-    <h2 class="content-subhead">How this works</h2>
-    <p>
-        The stations and their locations are pulled from the
-        <a href="https://www1.toronto.ca/wps/portal/contentonly?vgnextoid=ad3cb6b6ae92b310VgnVCM10000071d60f89RCRD">
-            BikeShare Toronto Open Data API
-        </a>. Then using the submitted trip data in HTML form, the start and end stations are tallied up and turned
-        into this heat map based on how often each station is used.
-    </p>
-    <p>
-        By default this map shows sample data based on my own usage.
-    </p>
+    <h2 class="content-subhead"><a href="{% url 'personal_heatmap' %}">Personal Heatmap</a></h2>
+    <p>Map your BikeShare station usage based on your trip history.</p>
 </div>
 
 <div>
-    <h2 class="content-subhead">How to get your trip HTML data</h2>
-    <p>
-        Go to the <em>Trips</em> page on the BikeShare website,
-        <a href="https://bikesharetoronto.com/members/trips">https://bikesharetoronto.com/members/trips</a>,
-        click <em>Show Results</em>, then open up the page inspector (F12), and copy the page's HTML. Paste
-        that into the box below and click Submit.
-    </p>
-    <img src="{% static 'img/chrome_help.png' %}">
-</div>
-
-<h2 class="content-subhead">Paste your HTML here</h2>
-<div class="pure-form pure-form-stacked">
-    <form action="" method="post">
-        {% csrf_token %}
-        <fieldset>
-            {{ form.html_paste|addclass:'pure-input-1' }}
-            <input type="submit" value="Submit" class="pure-button pure-button-primary" />
-        </fieldset>
-    </form>
-</div>
-
-<div>
-    <h2 class="content-subhead">Why not just pull the trip data from the website?</h2>
-    <p>
-        It would be much easier to pull the trip data from the website by asking for your BikeShare username and
-        password, but this information shouldn't be shared since it would also give access to account information such
-        as personal and payment information. There is no API to safely get the trip data otherwise.
-    </p>
+    <h2 class="content-subhead"><a href="{% url 'system_heatmap' %}">System Heatmap</a></h2>
+    <p>24-hour animated heatmaps showing BikeShare distribution around Toronto throughout the day.</p>
 </div>
 {% endblock %}
