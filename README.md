@@ -43,6 +43,27 @@ If using nginx
 ```
 will route for the URL domain.tld/bikeshare/
 
+A systemd service can be setup to automatically deal with running uWSGI.
+On Debian in /lib/systemd/system/uwsgi-bikeshare.service
+```
+[Unit]
+Description=uWSGI for bikeshare Django project
+
+[Service]
+ExecStart=/home/nap/.virtualenvs/bikeshare_tools/bin/uwsgi --ini /home/nap/bikeshare_tools/uwsgi.ini
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target
+```
+which can then be started with
+```
+$ sudo service uwsgi-bikeshare start
+```
+
 ## Built With
 
 * [Django](https://www.djangoproject.com/) - The web framework
