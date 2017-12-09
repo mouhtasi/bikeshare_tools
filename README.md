@@ -22,6 +22,8 @@ $ python manage.py migrate
 $ python manage.py collectstatic
 ```
 
+Generate a [new secret key](https://www.miniwebtool.com/django-secret-key-generator/) and place it in bikeshare_tools/SECRET_KEY
+
 Run the project with uWSGI:
 ```
 $ uwsgi -ini uwsgi.ini
@@ -38,7 +40,6 @@ If using nginx
     uwsgi_pass  unix:/home/nap/bikeshare_tools/bikeshare_tools.sock;
     include /home/nap/bikeshare_tools/uwsgi_params;
   }
-
 ```
 will route for the URL domain.tld/bikeshare/
 
