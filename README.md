@@ -69,6 +69,7 @@ $ sudo service uwsgi-bikeshare start
 * [Django](https://www.djangoproject.com/) - The web framework
 * [folium](http://python-visualization.github.io/folium/) - The mapping framework
 * [BikeShare Toronto Open Data](https://www1.toronto.ca/wps/portal/contentonly?vgnextoid=ad3cb6b6ae92b310VgnVCM10000071d60f89RCRD) - API data used for mapping
+* [Pure.css](https://purecss.io/) - CSS used for the layout
 
 ## Authors
 
