@@ -10,7 +10,6 @@ Install the dependencies
 ```
 $ pip install Django beautifulsoup4 uwsgi
 $ pip install git+https://github.com/python-visualization/folium
-
 ```
 There seems to be a bug in folium I'll soon be sending a PR for, and another bug has been fixed already but not released, so pip installing from the repo is preferred.
 
