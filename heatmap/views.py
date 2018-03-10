@@ -52,7 +52,7 @@ def check_and_generate_sample_map():
         with open(sample_data_path) as f:
             sample_html = f.read()
         m = generate_map(sample_html)
-        with open('/home/nap/bikeshare_tools/sample_derp.html', 'w') as f:
+        with open(os.path.join(current_dir, 'sample_derp.html'), 'w') as f:
             f.write(m._repr_html_())
         m.save(sample_map_path)
 
@@ -150,8 +150,10 @@ def system_heatmap(request):
 
 
 def create_and_save_global_maps(stations_data):
-    m1 = folium.Map(location=[43.6531661,-79.394812], zoom_start=13, tiles='Stamen Toner', prefer_canvas=True)
-    m2 = folium.Map(location=[43.6531661,-79.394812], zoom_start=13, tiles='Stamen Toner', prefer_canvas=True)
+    m1 = folium.Map(location=[43.6531661,-79.394812], zoom_start=13, tiles='Stamen Toner', prefer_canvas=True,
+                    detect_retina=True)
+    m2 = folium.Map(location=[43.6531661,-79.394812], zoom_start=13, tiles='Stamen Toner', prefer_canvas=True,
+                    detect_retina=True)
     times = []  # [time, time, time, ...]
     stations = []  # [[[lat, lon, w], [lat, lon, w], ...], [[lat, lon, w], [lat, lon, w], ...]]
     stations_by_capacity = []
