@@ -18,5 +18,5 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('bikeshare/', include('heatmap.urls')),
+    path('bikeshare/', include('website.urls')),
 ]

@@ -1,0 +1,53 @@
+{% load static %}
+{% load my_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pure/pure-min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pure-layout-side-menu/side-menu.css' %}" />
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+<div id="layout">
+    <!-- Menu toggle -->
+    <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+    </a>
+
+    <div id="menu">
+        <div class="pure-menu">
+            <a class="pure-menu-heading" href="https://imadm.ca/">imadm.ca</a>
+            <a class="pure-menu-heading" href="{% url 'index' %}">Bikeshare</a>
+
+            <ul class="pure-menu-list">
+                {% with url_name=request.resolver_match.url_name %}
+                <li class="pure-menu-item menu-item-divided {% if url_name == 'personal_heatmap' %}pure-menu-selected{% endif %}">
+                    <a href="{% url 'personal_heatmap' %}" class="pure-menu-link">Personal Heatmap</a>
+                </li>
+                <li class="pure-menu-item menu-item-divided {% if url_name == 'system_heatmap' %}pure-menu-selected{% endif %}">
+                    <a href="{% url 'system_heatmap' %}" class="pure-menu-link">System Heatmap</a>
+                </li>
+                {% endwith %}
+            </ul>
+        </div>
+    </div>
+
+    <div id="main">
+        <div class="header">
+            <a href="https://github.com/mouhtasi/bikeshare_tools"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+            <h1>{% block page_title %}{% endblock %}</h1>
+            <h2>{% block subtitle %}{% endblock %}</h2>
+        </div>
+
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/ui.js' %}"></script>
+</body>
+</html>

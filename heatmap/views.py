@@ -11,10 +11,6 @@ import pickle
 from django.http import HttpResponse
 
 
-def index(request):
-    return render(request, 'heatmap/index.html')
-
-
 def personal_heatmap(request):
     context = {}
     current_dir = os.path.dirname(os.path.abspath(__file__))

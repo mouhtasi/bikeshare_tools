@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load my_filters %}
+
+{% block title %}{% block page_title %}BikeShare Toronto Tools{% endblock %}{% endblock %}
+{% block subtitle %}A set of tools for Toronto's BikeShare system{% endblock %}
+
+{% block content %}
+<div>
+    <h2 class="content-subhead"><a href="{% url 'personal_heatmap' %}">Personal Heatmap</a></h2>
+    <p>Map your BikeShare station usage based on your trip history.</p>
+</div>
+
+<div>
+    <h2 class="content-subhead"><a href="{% url 'system_heatmap' %}">System Heatmap</a></h2>
+    <p>24-hour animated heatmaps showing BikeShare distribution around Toronto throughout the day.</p>
+</div>
+{% endblock %}
