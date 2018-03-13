@@ -1,3 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def catalog_home(request):
+
+    return render(request, 'bikesharestationcatalog/catalog.html')

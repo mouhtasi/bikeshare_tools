@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load my_filters %}
+
+{% block extra_head %}<link rel="stylesheet" type="text/css" href="{% static 'css/catalog.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/mapbox-gl.css' %}" />
+<script src="{% static 'js/mapbox-gl.js' %}"></script>
+<script src="{% static 'js/catalog.js'%} "></script>
+{% endblock %}
+
+{% block title %}{% block page_title %}Catalog{% endblock %}{% endblock %}
+{% block subtitle %}Catalog{% endblock %}
+
+{% block content %}
+<div>
+    <div id="map"></div>
+</div>
+{% endblock %}
