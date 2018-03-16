@@ -5,7 +5,7 @@ import time
 import pickle
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-filepath = os.path.join(current_dir, 'data_with_capacity.pickle')
+data_filepath = os.path.join(current_dir, 'bikeshare_api_data.pickle')
 
 response = requests.get('https://tor.publicbikesystem.net/ube/gbfs/v1/en/station_information')
 station_data = json.loads(response.content)['data']['stations']
@@ -16,8 +16,8 @@ status_data = json.loads(response.content)['data']['stations']
 t = time.time()
 
 stations = []
-if os.path.isfile(filepath):
-    with open(filepath, 'rb') as f:
+if os.path.isfile(data_filepath):
+    with open(data_filepath, 'rb') as f:
         stations = pickle.load(f)
 
 station_status_merged = {}
@@ -34,5 +34,5 @@ for id, s in station_status_merged.items():
                          'bikes_available': s['num_bikes_available'], 'capacity': s['capacity']})
 
 
-with open(filepath, 'wb') as f:
+with open(data_filepath, 'wb') as f:
     pickle.dump(stations, f, pickle.HIGHEST_PROTOCOL)

@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-existing_data_filepath = os.path.join(current_dir, 'data_with_capacity.pickle')  # oh god pls dont mess with this file
+existing_data_filepath = os.path.join(current_dir, 'bikeshare_api_data.pickle')  # oh god pls dont mess with this file
 
 stations = []
 if os.path.isfile(existing_data_filepath):
