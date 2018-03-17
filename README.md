@@ -8,7 +8,7 @@ These are a set of tools to do some fun things with the [Toronto Open Data BikeS
 
 Install the dependencies
 ```
-$ pip install Django beautifulsoup4 uwsgi
+$ pip install Django beautifulsoup4 uwsgi python-dotenv
 $ pip install git+https://github.com/python-visualization/folium
 ```
 There seems to be a bug in folium I'll soon be sending a PR for, and another bug has been fixed already but not released, so pip installing from the repo is preferred.
@@ -22,7 +22,7 @@ $ python manage.py migrate
 $ python manage.py collectstatic
 ```
 
-Generate a [new secret key](https://www.miniwebtool.com/django-secret-key-generator/) and place it in bikeshare_tools/env_secrets as
+Generate a [new secret key](https://www.miniwebtool.com/django-secret-key-generator/) and place it in bikeshare_tools/.env as
 ```SECRET_KEY="---key here---"```.
 
 Run the project with uWSGI:

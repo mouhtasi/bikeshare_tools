@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import os
 import sys
+from dotenv import load_dotenv
+load_dotenv(override=True)
 
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bikeshare_tools.settings")

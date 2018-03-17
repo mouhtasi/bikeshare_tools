@@ -8,6 +8,5 @@ heatmap/templates/heatmap/m2.html
 heatmap/templates/heatmap/sample_map.html
 heatmap/bikeshare_api/station_information
 bikeshare_tools/bikeshare_api_data.pickle
-bikeshare_tools/SECRET_KEY
 heatmap/sample_data/sample_data
-bikeshare_tools/env_secrets
+bikeshare_tools/.env
