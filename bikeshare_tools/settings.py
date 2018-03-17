@@ -78,8 +78,12 @@ WSGI_APPLICATION = 'bikeshare_tools.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'bikeshare_tools',
+            'USER': os.environ['DB_USER'],
+            'PASSWORD': os.environ['DB_PASS'],
+            'HOST': 'localhost',
+            'PORT': '',
     }
 }
 
