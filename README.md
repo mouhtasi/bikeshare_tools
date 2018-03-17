@@ -22,7 +22,8 @@ $ python manage.py migrate
 $ python manage.py collectstatic
 ```
 
-Generate a [new secret key](https://www.miniwebtool.com/django-secret-key-generator/) and place it in bikeshare_tools/SECRET_KEY
+Generate a [new secret key](https://www.miniwebtool.com/django-secret-key-generator/) and place it in bikeshare_tools/env_secrets as
+```SECRET_KEY="---key here---"```.
 
 Run the project with uWSGI:
 ```
@@ -50,6 +51,7 @@ On Debian in /lib/systemd/system/uwsgi-bikeshare.service
 Description=uWSGI for bikeshare Django project
 
 [Service]
+EnvironmentFile=/home/nap/bikeshare_tools/bikeshare_tools/env_secrets
 ExecStart=/home/nap/.virtualenvs/bikeshare_tools/bin/uwsgi --ini /home/nap/bikeshare_tools/uwsgi.ini
 Restart=always
 KillSignal=SIGQUIT
