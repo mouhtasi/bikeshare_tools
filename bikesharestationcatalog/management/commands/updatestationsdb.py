@@ -5,6 +5,7 @@ import json
 
 # TODO: Add a check to only update if data is changed
 
+
 class Command(BaseCommand):
     help = 'Updates the Station table using API data'
 
