@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.core.serializers import serialize
 from bikesharestationcatalog.models import Station
 import json
 from django.core.serializers.json import DjangoJSONEncoder
@@ -16,7 +15,7 @@ def serialize_geojson(model_queryset):
                 'coordinates': [model.longitude, model.latitude]
             },
             'properties': {
-                'title': model.name
+                'name': model.name
             }
         })
 
