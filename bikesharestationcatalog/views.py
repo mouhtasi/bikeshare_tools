@@ -2,10 +2,14 @@ from django.shortcuts import render
 from bikesharestationcatalog.models import Station
 import json
 from django.core.serializers.json import DjangoJSONEncoder
+from django.db.models import QuerySet
 
 
 def serialize_geojson(model_queryset):
     geo = {'type': 'FeatureCollection', 'features': []}
+
+    if not isinstance(model_queryset, QuerySet):
+        model_queryset = [model_queryset]
 
     for model in model_queryset:
         geo['features'].append({
@@ -28,5 +32,8 @@ def catalog_home(request):
     return render(request, 'bikesharestationcatalog/catalog.html', {'geojson': geojson})
 
 
-def station_details(request, id):
-    return render(request, 'bikesharestationcatalog/station_details.html', {'station_id': id})
+def station_details(request, station_id):
+    station = Station.objects.get(id=station_id)
+    geojson = serialize_geojson(station)
+
+    return render(request, 'bikesharestationcatalog/station_details.html', {'station_id': station_id, 'geojson': geojson})

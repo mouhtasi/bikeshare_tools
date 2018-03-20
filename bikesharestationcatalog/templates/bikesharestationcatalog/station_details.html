@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load my_filters %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/grids-min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/grids-responsive-min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/station_details.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/mapbox-gl.css' %}" />
+<script src="{% static 'js/mapbox-gl.js' %}"></script>
+<script>
+    (function () {
+        window.geojson = {{ geojson|safe }};
+    }());
+</script>
+<script src="{% static 'js/station_details.js'%} "></script>
+{% endblock %}
+
+{% block title %}{% block page_title %}Station Details{% endblock %}{% endblock %}
+{% block subtitle %}{% endblock %}
+
+{% block content %}
+<div>
+{{ station_id }}
+<div class="pure-g">
+    <div class="pure-u-1-2 pure-u-md-1-2 pure-u-sm-1">
+        <div id="map"></div>
+    </div>
+</div>
+</div>
+{% endblock %}

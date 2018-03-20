@@ -5,7 +5,7 @@ window.onload = function () {
     map = new mapboxgl.Map({
         container: 'map',
         center: [-79.3864974, 43.6580617],
-        zoom: 13,
+        zoom: 12,
         style: 'mapbox://styles/mapbox/streets-v10'
     });
 
