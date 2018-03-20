@@ -40,6 +40,8 @@ window.onload = function () {
         map.on('click', 'stations', function (e) {
             var coordinates = e.features[0].geometry.coordinates.slice();
             var description = e.features[0].properties.name;
+            description += '<br><a href="' +
+                (window.origin + window.station_detail_url).replace('0', e.features[0].properties.id) + '">Details</a>';
 
             // Ensure that if the map is zoomed out such that multiple
             // copies of the feature are visible, the popup appears

@@ -15,6 +15,7 @@ def serialize_geojson(model_queryset):
                 'coordinates': [model.longitude, model.latitude]
             },
             'properties': {
+                'id': model.id,
                 'name': model.name
             }
         })
@@ -25,3 +26,7 @@ def serialize_geojson(model_queryset):
 def catalog_home(request):
     geojson = serialize_geojson(Station.objects.all())
     return render(request, 'bikesharestationcatalog/catalog.html', {'geojson': geojson})
+
+
+def station_details(request, id):
+    return render(request, 'bikesharestationcatalog/station_details.html', {'station_id': id})
