@@ -35,6 +35,7 @@ def catalog_home(request):
 
 def station_details(request, s_id):
     station = Station.objects.get(id=s_id)
+    images = StationImage.objects.filter(station=station)
 
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
@@ -47,4 +48,4 @@ def station_details(request, s_id):
     geojson = serialize_geojson(station)
 
     return render(request, 'bikesharestationcatalog/station_details.html', {'station': station, 'geojson': geojson,
-                                                                            'form': form})
+                                                                            'form': form, 'images': images})

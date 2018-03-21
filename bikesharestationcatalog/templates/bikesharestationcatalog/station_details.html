@@ -34,16 +34,27 @@
     </div>
 </div>
 <div class="pure-g">
-    <form action="{% url 'station_details' station.id%}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <p>{{ form.non_field_errors }}</p>
-        <p>{{ form.imgfile.label_tag }} {{ form.imgfile.help_text }}</p>
-        <p>
-            {{ form.imgfile.errors }}
-            {{ form.imgfile }}
-        </p>
-        <p><input type="submit" value="Upload" /></p>
-    </form>
+    <div class="pure-u-1">
+        <form action="{% url 'station_details' station.id%}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>{{ form.imgfile.label_tag }}</p>
+            <p>
+                {{ form.imgfile }}
+            </p>
+            <p><input type="submit" value="Upload" /></p>
+        </form>
+    </div>
+</div>
+<div class="pure-g">
+    <div class="pure-u-1">
+        {% if images %}
+            <ul>
+            {% for image in images %}
+                <li><a href="{{ image.image.url }}"><img src="{{ image.image.url }}"></a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
 </div>
 </div>
 {% endblock %}
