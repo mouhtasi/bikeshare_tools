@@ -1,4 +1,6 @@
 from django.db import models
+import os
+import hashlib
 
 
 class Station(models.Model):
@@ -8,3 +10,17 @@ class Station(models.Model):
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
     capacity = models.PositiveSmallIntegerField()
+
+
+def hash_image(instance, filename):
+    instance.image.open()
+    contents = instance.image.read()
+    fname, ext = os.path.splitext(filename)
+
+    return 'image/{}{}'.format(hashlib.sha1(contents).hexdigest(), ext)
+
+
+class StationImage(models.Model):
+    station = models.ForeignKey('Station', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=hash_image)
+    date = models.DateField(auto_now_add=True)

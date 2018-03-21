@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from bikesharestationcatalog.models import Station
+from bikesharestationcatalog.models import Station, StationImage
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import QuerySet
+from bikesharestationcatalog.forms import ImageForm
 
 
 def serialize_geojson(model_queryset):
@@ -32,8 +33,18 @@ def catalog_home(request):
     return render(request, 'bikesharestationcatalog/catalog.html', {'geojson': geojson})
 
 
-def station_details(request, station_id):
-    station = Station.objects.get(id=station_id)
+def station_details(request, s_id):
+    station = Station.objects.get(id=s_id)
+
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            newimg = StationImage(station=station, image=request.FILES['imgfile'])
+            newimg.save()
+    else:
+        form = ImageForm()
+
     geojson = serialize_geojson(station)
 
-    return render(request, 'bikesharestationcatalog/station_details.html', {'station_id': station_id, 'geojson': geojson})
+    return render(request, 'bikesharestationcatalog/station_details.html', {'station': station, 'geojson': geojson,
+                                                                            'form': form})

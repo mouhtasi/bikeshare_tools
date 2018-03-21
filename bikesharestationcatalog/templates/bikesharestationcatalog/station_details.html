@@ -17,15 +17,33 @@
 {% endblock %}
 
 {% block title %}{% block page_title %}Station Details{% endblock %}{% endblock %}
-{% block subtitle %}{% endblock %}
+{% block subtitle %}{{ station.name }}{% endblock %}
 
 {% block content %}
 <div>
-{{ station_id }}
 <div class="pure-g">
     <div class="pure-u-1-2 pure-u-md-1-2 pure-u-sm-1">
         <div id="map"></div>
     </div>
+    <div class="pure-u-1-2 pure-u-md-1-2 pure-u-sm-1">
+        <table>
+            <tr>
+                <td>Capacity:</td><td>{{ station.capacity }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="pure-g">
+    <form action="{% url 'station_details' station.id%}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>{{ form.non_field_errors }}</p>
+        <p>{{ form.imgfile.label_tag }} {{ form.imgfile.help_text }}</p>
+        <p>
+            {{ form.imgfile.errors }}
+            {{ form.imgfile }}
+        </p>
+        <p><input type="submit" value="Upload" /></p>
+    </form>
 </div>
 </div>
 {% endblock %}
