@@ -19,6 +19,8 @@ class Migration(migrations.Migration):
                 ('longitude', models.DecimalField(decimal_places=6, max_digits=9)),
                 ('latitude', models.DecimalField(decimal_places=6, max_digits=9)),
                 ('capacity', models.PositiveSmallIntegerField()),
+                ('num_bikes_available', models.PositiveSmallIntegerField()),
+                ('num_docks_available', models.PositiveSmallIntegerField()),
             ],
         ),
     ]

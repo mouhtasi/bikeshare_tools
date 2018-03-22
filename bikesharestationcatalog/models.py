@@ -10,6 +10,8 @@ class Station(models.Model):
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
     capacity = models.PositiveSmallIntegerField()
+    num_bikes_available = models.PositiveSmallIntegerField()
+    num_docks_available = models.PositiveSmallIntegerField()
 
 
 def hash_image(instance, filename):
@@ -18,6 +20,7 @@ def hash_image(instance, filename):
     fname, ext = os.path.splitext(filename)
 
     return 'image/{}{}'.format(hashlib.sha1(contents).hexdigest(), ext)
+# TODO: figure out how to overwrite files with the same name
 
 
 class StationImage(models.Model):
