@@ -32,6 +32,10 @@
                 <li class="pure-menu-item menu-item-divided {% if url_name == 'system_heatmap' %}pure-menu-selected{% endif %}">
                     <a href="{% url 'system_heatmap' %}" class="pure-menu-link">System Heatmap</a>
                 </li>
+                </li>
+                <li class="pure-menu-item menu-item-divided {% if url_name == 'station_catalog_home' or url_name == 'station_details' %}pure-menu-selected{% endif %}">
+                    <a href="{% url 'station_catalog_home' %}" class="pure-menu-link">Station Catalog</a>
+                </li>
                 {% endwith %}
             </ul>
         </div>
