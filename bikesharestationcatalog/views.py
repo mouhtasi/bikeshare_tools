@@ -21,7 +21,9 @@ def serialize_geojson(model_queryset):
             },
             'properties': {
                 'id': model.id,
-                'name': model.name
+                'name': model.name,
+                'num_bikes_available': model.num_bikes_available,
+                'num_docks_available': model.num_docks_available
             }
         })
 

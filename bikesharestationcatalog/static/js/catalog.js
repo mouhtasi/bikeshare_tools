@@ -38,10 +38,13 @@ window.onload = function () {
         // When a click event occurs on a feature in the places layer, open a popup at the
         // location of the feature, with description HTML from its properties.
         map.on('click', 'stations', function (e) {
-            var coordinates = e.features[0].geometry.coordinates.slice();
-            var description = e.features[0].properties.name;
+            var station_details = e.features[0];
+            var coordinates = station_details.geometry.coordinates.slice();
+            var description = station_details.properties.name;
+            description += '<br>Available Bikes: ' + station_details.properties.num_bikes_available;
+            description += '<br>Available Docks: ' + station_details.properties.num_docks_available;
             description += '<br><a href="' +
-                (window.origin + window.station_detail_url).replace('0', e.features[0].properties.id) + '">Details</a>';
+                (window.origin + window.station_detail_url).replace('0', station_details.properties.id) + '">Details</a>';
 
             // Ensure that if the map is zoomed out such that multiple
             // copies of the feature are visible, the popup appears

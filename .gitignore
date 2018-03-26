@@ -9,3 +9,4 @@ heatmap/bikeshare_api/station_information
 bikeshare_tools/bikeshare_api_data.pickle
 heatmap/sample_data/sample_data
 bikeshare_tools/.env
+bikeshare_tools/media/
