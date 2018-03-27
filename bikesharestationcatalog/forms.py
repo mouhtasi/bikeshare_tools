@@ -2,4 +2,4 @@ from django import forms
 
 
 class ImageForm(forms.Form):
-    imgfile = forms.ImageField(label='Select a file')
+    imgfile = forms.ImageField(label='Upload an image for this station:')
