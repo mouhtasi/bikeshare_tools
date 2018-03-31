@@ -2,6 +2,9 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiaW1hZG0iLCJhIjoiY2plbnJsMDJyMjU0MTMzcGhxcjZla
 // TODO: Add mapbox access token to env (include in template and load in this js)
 
 window.onload = function () {
+    document.getElementById('map').style.display = 'block';  // the element is hidden unless JS is enabled
+    document.getElementById('station-list').style.display = 'none'; // the element is hidden if JS is enabled
+
     map = new mapboxgl.Map({
         container: 'map',
         center: [-79.3864974, 43.6580617],

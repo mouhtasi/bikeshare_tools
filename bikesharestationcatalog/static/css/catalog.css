@@ -1,4 +1,9 @@
 #map {
     width: 100%;
     height: 70vh;
+    display: none; /* display is set to block in javascript if JS is enabled */
+}
+
+#station-list {
+    width: 100%;
 }

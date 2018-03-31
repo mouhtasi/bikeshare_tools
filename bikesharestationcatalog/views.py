@@ -31,8 +31,9 @@ def serialize_geojson(model_queryset):
 
 
 def catalog_home(request):
-    geojson = serialize_geojson(Station.objects.all())
-    return render(request, 'bikesharestationcatalog/catalog.html', {'geojson': geojson})
+    stations = Station.objects.all().order_by('name')  # we'll send the stations to build a table in case JS isn't enabled to show a map
+    geojson = serialize_geojson(stations)  # for the map
+    return render(request, 'bikesharestationcatalog/catalog.html', {'geojson': geojson, 'stations': stations})
 
 
 def station_details(request, s_id):

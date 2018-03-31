@@ -19,6 +19,15 @@
 
 {% block content %}
 <div id="map"></div>
+<table id="station-list">
+{# This table will be hidden if JS is enabled #}
+    {% if stations %}
+        <tr><th>Name</th><th>Available Bikes</th><th>Available Docks</th></tr>
+        {% for station in stations %}
+            <tr><td><a href="{% url 'station_details' station.id %}">{{ station.name }}</a></td><td>{{ station.num_bikes_available }}</td><td>{{ station.num_docks_available }}</td></tr>
+        {% endfor %}
+    {% endif %}
+</table>
 <div>
     <p>Use the map and click on a bikeshare station to view bike and dock availability. Click to the station details page
      in the popup for more information on that specific station.</p>
