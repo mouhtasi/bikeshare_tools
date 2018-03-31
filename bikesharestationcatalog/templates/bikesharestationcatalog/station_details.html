@@ -28,6 +28,7 @@
 <div class="pure-g row">
     {% if images %}
         <div class="pure-u-1 slideshow-container">
+        <div id="non-js-image"><img class="station_img" src="{{ images.0.image.url }}"></div>
         {% for image in images %}
             <div class="mySlides fade">
                 <img class="station_img" src="{{ image.image.url }}">

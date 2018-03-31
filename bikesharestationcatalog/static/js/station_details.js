@@ -29,6 +29,10 @@ window.onload = function () {
         );
     });
 
+    // By default the page will show the first image in case JS isn't enabled
+    // We'll just hide that image when JS is enabled so the slideshow can work as expected
+    document.getElementById('non-js-image').style.display = 'none';
+
     if (document.querySelector('.slideshow-container') !== null) {
         var slideIndex = 1;
         showSlides(slideIndex);
