@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 import os
 import hashlib
 
@@ -27,3 +28,9 @@ class StationImage(models.Model):
     station = models.ForeignKey('Station', on_delete=models.CASCADE)
     image = models.ImageField(upload_to=hash_image)
     date = models.DateField(auto_now_add=True)
+
+
+class StationAverageLog(models.Model):
+    station = models.ForeignKey('Station', on_delete=models.CASCADE)
+    day_of_week = models.CharField(max_length=10)
+    time_data = JSONField()
