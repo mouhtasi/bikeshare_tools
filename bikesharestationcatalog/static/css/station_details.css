@@ -96,3 +96,20 @@
         opacity: 1
     }
 }
+
+.chart-container {
+    height: 60vh;
+    max-height: 400px;
+    min-height: 200px;
+}
+
+#myChart {
+    height: 400px;
+    width: 800px;
+}
+
+#nextDayArrow, #previousDayArrow {
+    margin: auto;
+    font-size: 4em;
+    cursor: pointer;
+}
