@@ -96,8 +96,8 @@ window.onload = function () {
                 yAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        display: false,
-                        max: 1
+                        max: window.station_capacity,
+                        autoSkip: true
                     },
                     gridLines: {
                         display: false,

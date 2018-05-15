@@ -14,13 +14,14 @@
     (function () {
         window.geojson = {{ geojson|safe }};
         window.station_averages_json = {{ station_averages|safe }};
+        window.station_capacity = {{ station.capacity }};
     }());
 </script>
 <script src="{% static 'js/station_details.js'%} "></script>
 {% endblock %}
 
-{% block title %}{% block page_title %}Station Details{% endblock %}{% endblock %}
-{% block subtitle %}{{ station.name }}{% endblock %}
+{% block title %}{% block page_title %}{{ station.name }} {% endblock %}{% endblock %}
+{% block subtitle %}Station Details{% endblock %}
 
 {% block content %}
 <div class="pure-g row">

@@ -32,10 +32,12 @@ def serialize_geojson(model_queryset):
 
 def serialize_availability_json(qs):
     data = {}
+    capacity = qs[0].station.capacity
     for station_record in qs:
         data[station_record.day_of_week] = []
         for time, time_data in station_record.time_data.items():
-            data[station_record.day_of_week].append(time_data['mean'])
+            num_bikes = round(time_data['mean'] * capacity)
+            data[station_record.day_of_week].append(num_bikes)
 
     return json.dumps(data, cls=DjangoJSONEncoder)
 
