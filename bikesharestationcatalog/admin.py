@@ -13,6 +13,6 @@ class StationImageAdmin(admin.ModelAdmin):
 
     image_tag.short_description = 'Image'
 
-    list_display = ('station', 'image_tag',)
-    fields = ('station', 'date', 'image_tag')
+    list_display = ('station', 'image_tag', 'approved')
+    fields = ('station', 'date', 'image_tag', 'approved')
     readonly_fields = ('date', 'image_tag')

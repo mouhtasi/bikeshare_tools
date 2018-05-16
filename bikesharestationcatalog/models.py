@@ -41,6 +41,7 @@ class StationImage(models.Model):
     station = models.ForeignKey('Station', on_delete=models.CASCADE)
     image = models.ImageField(upload_to=hash_image)
     date = models.DateField(auto_now_add=True)
+    approved = models.BooleanField(default=False)
 
 
 class StationAverageLog(models.Model):
