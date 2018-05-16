@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.postgres.fields import JSONField
 import os
 import hashlib
+from django.conf import settings
 
 
 class Station(models.Model):
@@ -19,9 +20,17 @@ def hash_image(instance, filename):
     instance.image.open()
     contents = instance.image.read()
     fname, ext = os.path.splitext(filename)
+    path = 'image/{}{}'.format(hashlib.sha1(contents).hexdigest(), ext)
 
-    return 'image/{}{}'.format(hashlib.sha1(contents).hexdigest(), ext)
-# TODO: figure out how to overwrite files with the same name
+    # Django will normally add a unique string to the end of a filename if it already exists
+    # but we'd rather not have that since we're naming the files by hash
+    # so delete the existing file so Django will use the plain file name
+    # we'll end up with duplicate entries in the database but we can just check for count before deleting the image
+    full_path = os.path.join(settings.MEDIA_ROOT, path)
+    if os.path.exists(full_path):
+        os.remove(full_path)
+
+    return path
 
 
 class StationImage(models.Model):
