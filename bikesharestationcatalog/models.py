@@ -3,6 +3,7 @@ from django.contrib.postgres.fields import JSONField
 import os
 import hashlib
 from django.conf import settings
+from django.utils.html import mark_safe
 
 
 class Station(models.Model):
@@ -14,6 +15,9 @@ class Station(models.Model):
     capacity = models.PositiveSmallIntegerField()
     num_bikes_available = models.PositiveSmallIntegerField()
     num_docks_available = models.PositiveSmallIntegerField()
+
+    def __str__(self):
+        return self.name
 
 
 def hash_image(instance, filename):
