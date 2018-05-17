@@ -52,7 +52,7 @@ def catalog_home(request):
 def station_details(request, s_id):
     station = Station.objects.get(id=s_id)
     station_averages = serialize_availability_json(StationAverageLog.objects.filter(station_id=s_id))
-    images = StationImage.objects.filter(station=station)
+    images = StationImage.objects.filter(station=station, approved=True)
 
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)

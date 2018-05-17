@@ -6,7 +6,7 @@ window.onload = function () {
         container: 'map',
         center: window.geojson['features'][0]['geometry']['coordinates'],
         zoom: 17,
-        style: 'mapbox://styles/mapbox/streets-v10'
+        style: 'mapbox://styles/mapbox/satellite-v9'
     });
 
     map.on('load', function () {
@@ -153,7 +153,8 @@ window.onload = function () {
             },
             title: {
                 display: true,
-                text: day_string
+                text: day_string,
+                fontSize: 20
             },
             maintainAspectRatio: false,
             animation: {
