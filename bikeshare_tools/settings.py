@@ -133,3 +133,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 STATIC_URL = '/bikeshare/static/'
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = 30 * 1024 * 1024
