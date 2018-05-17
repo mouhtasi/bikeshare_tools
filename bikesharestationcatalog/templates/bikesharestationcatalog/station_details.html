@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/grids-responsive-min.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/station_details.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/mapbox-gl.css' %}" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 <script src="{% static 'js/mapbox-gl.js' %}"></script>
 <script src="{% static 'js/moment.min.js' %}"></script>
 <script src="{% static 'js/Chart.min.js' %}"></script>
@@ -23,6 +24,12 @@
 {% block title %}{% block page_title %}{{ station.name }} {% endblock %}{% endblock %}
 
 {% block content %}
+<div class="pure-g row">
+    {% if message %}
+        <div class="pure-u-1 message"><i class="fas fa-check-circle"></i> {{ message }}</div>
+    {% endif %}
+</div>
+
 <div class="pure-g row">
     <div class="pure-u-1 pure-u-md-1-3 pure-u-lg-1-3 pure-xl-1-3 station_availability_item"><h3>Available Bikes: {{ station.num_bikes_available }}</h3></div>
     <div class="pure-u-1 pure-u-md-1-3 pure-u-lg-1-3 pure-xl-1-3 station_availability_item"><h3>Available Docks: {{ station.num_docks_available }}</h3></div>
@@ -43,14 +50,23 @@
         <a id="next">&#10095;</a>
         </div>
     {% endif %}
-    <div class="pure-u-1 {% if images %} pure-u-lg-1-3 pure-u-xl-1-3{% endif %}">
+    <div class="pure-u-1 {% if images %}pure-u-lg-1-3 pure-u-xl-1-3{% endif %}">
         <div id="map"></div>
+        <div class="upload">
+            <form id="img_upload_form" action="{% url 'station_details' station.id%}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label class="custom-file-upload">
+                <i class="fas fa-upload"></i> Upload Station Photo
+                {{ form.imgfile }}
+            </label>
+        </form>
+        </div>
     </div>
 </div>
 
 <div class="pure-g row">
     <div class="pure-u-1">
-        <h3 class="chartTitle">Usual Bike Availability</h3>
+        <h3 class="chartTitle">Average Bike Availability</h3>
     </div>
 </div>
 
@@ -68,13 +84,7 @@
 
 <div class="pure-g row">
     <div class="pure-u-1">
-        <form action="{% url 'station_details' station.id%}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <p>{{ form.imgfile.label_tag }}</p>
-            <p>
-                {{ form.imgfile }} <input type="submit" value="Upload" />
-            </p>
-        </form>
+
     </div>
 </div>
 {% endblock %}

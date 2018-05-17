@@ -53,12 +53,14 @@ def station_details(request, s_id):
     station = Station.objects.get(id=s_id)
     station_averages = serialize_availability_json(StationAverageLog.objects.filter(station_id=s_id))
     images = StationImage.objects.filter(station=station, approved=True)
+    message = None
 
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
             newimg = StationImage(station=station, image=request.FILES['imgfile'])
             newimg.save()
+            message = 'Thank you. Photo has been submitted for moderation.'
     else:
         form = ImageForm()
 
@@ -66,4 +68,5 @@ def station_details(request, s_id):
 
     return render(request, 'bikesharestationcatalog/station_details.html', {'station': station, 'geojson': geojson,
                                                                             'form': form, 'images': images,
-                                                                            'station_averages': station_averages})
+                                                                            'station_averages': station_averages,
+                                                                            'message': message})
