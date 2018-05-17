@@ -12,6 +12,10 @@
     margin: auto 2px auto 5px;
 }
 
+.mapcontainer {
+    touch-action: manipulation;
+}
+
 .row {
     margin-top: 5px;
 }

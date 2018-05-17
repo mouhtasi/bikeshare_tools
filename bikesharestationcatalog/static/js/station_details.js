@@ -11,7 +11,7 @@ window.onload = function () {
 
     map.on('load', function () {
         var nav = new mapboxgl.NavigationControl();
-        map.addControl(nav, 'top-left');
+        map.addControl(nav, 'bottom-right');
 
         map.addLayer(
             {
@@ -27,6 +27,8 @@ window.onload = function () {
                 }
             }
         );
+
+        map['dragPan'].disable();
     });
 
     // By default the page will show the first image in case JS isn't enabled

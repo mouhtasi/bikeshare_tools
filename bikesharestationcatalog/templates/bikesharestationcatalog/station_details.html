@@ -50,7 +50,7 @@
         <a id="next">&#10095;</a>
         </div>
     {% endif %}
-    <div class="pure-u-1 {% if images %}pure-u-lg-1-3 pure-u-xl-1-3{% endif %}">
+    <div class="pure-u-1 {% if images %}pure-u-lg-1-3 pure-u-xl-1-3{% endif %} mapcontainer">
         <div id="map"></div>
         <div class="upload">
             <form id="img_upload_form" action="{% url 'station_details' station.id%}" method="post" enctype="multipart/form-data">

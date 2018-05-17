@@ -60,7 +60,7 @@ def station_details(request, s_id):
         if form.is_valid():
             newimg = StationImage(station=station, image=request.FILES['imgfile'])
             newimg.save()
-            message = 'Thank you. Photo has been submitted for moderation.'
+            message = 'Thank you. Your photo has been submitted for moderation.'
     else:
         form = ImageForm()
 
